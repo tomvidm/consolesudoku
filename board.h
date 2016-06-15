@@ -10,4 +10,5 @@ private:
 
 public:
 	Board(uint n);
+	void print() const;
 };

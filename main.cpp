@@ -4,5 +4,6 @@
 int main()
 {
 	Board gameboard(3);
+	gameboard.print();
 	return 0;
 }

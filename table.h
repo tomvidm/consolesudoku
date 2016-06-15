@@ -19,7 +19,7 @@ public:
 	std::vector<T> getRow(uint r);
 	std::vector<T> getCol(uint c);
 	
-	T get(uint r, uint c);
+	T get(uint r, uint c) const;
 	Table cut(uint r0, uint c0, uint r1, uint c1);
 
 	void edit(uint r, uint v, T val);
@@ -58,7 +58,7 @@ std::vector<T> Table<T>::getCol(uint c)
 }
 
 template <typename T>
-T Table<T>::get(uint r, uint c)
+T Table<T>::get(uint r, uint c) const
 {
 	return data[r][c];
 }
