@@ -10,16 +10,22 @@ void Board::print() const
 	{
 		if (r % board_size == 0 && r > 0)
 		{
-			cout << endl;
+			cout << "\t---------------------" << endl;
 		}
 
 		cout << r << "\t";
 
 		for (uint c = 0; c < board_size*board_size; c++)
 		{
-			if (c % board_size == 0 && c > 0)
+			if ((c % board_size == 0 && c > 0))
+			{
+				cout << "| ";
+
+			}
+			else if (board.get(r, c) == 0)
 			{
 				cout << "  ";
+				continue;
 			}
 			cout << board.get(r, c) << " ";
 			
@@ -29,6 +35,54 @@ void Board::print() const
 	}
 }
 
+void Board::derp() const
+{
+	cout << "================================" << endl;
+	cout << "== Allowed in rows =============" << endl << endl;
+	cout << "          1 2 3 4 5 6 7 8 9" << endl << endl;
+	uint counter = 1;
+	for (auto i : r_nums)
+	{
+		cout << "row " << counter << "     ";
+		counter++;
+
+		for (auto j : i)
+		{
+			cout << (int)j << " ";
+		}
+		cout << endl;
+	}
+	cout << "================================" << endl;
+	cout << "== Allowed in columns ==========" << endl << endl;
+	cout << "         1 2 3 4 5 6 7 8 9" << endl << endl;
+	counter = 1;
+	for (auto i : c_nums)
+	{
+		cout << "column " << counter << "  ";
+		counter++;
+
+		for (auto j : i)
+		{
+			cout << (int)j << " ";
+		}
+		cout << endl;
+	}
+	cout << "================================" << endl;
+	cout << "== Allowed in boxes ============" << endl << endl;
+	cout << "          1 2 3 4 5 6 7 8 9" << endl << endl;
+	counter = 1;
+	for (auto i : s_nums)
+	{
+		cout << "square " << counter << "  ";
+		counter++;
+
+		for (auto j : i)
+		{
+			cout << (int)j << " ";
+		}
+		cout << endl;
+	}
+}
 
 /*	open_from_file
 Read a sudoku board from a formatted .txt file. The loaded file should contain
@@ -79,9 +133,18 @@ Board::Board(uint n)
 
 	for (uint r = 0; r < n*n; r++)
 	{
+		std::vector<bool> emptyBoolVector;
+		r_nums.push_back(emptyBoolVector);
+		c_nums.push_back(emptyBoolVector);
+		s_nums.push_back(emptyBoolVector);
+
 		for (uint c = 0; c < n*n; c++)
 		{
 			board.edit(r, c, 0);
+
+			r_nums[r].push_back(true);
+			c_nums[r].push_back(true);
+			s_nums[r].push_back(true);
 		}
 	}
 }

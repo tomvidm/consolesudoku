@@ -9,6 +9,9 @@ class Board
 {
 private:
 	Table<uint> board;
+	std::vector<std::vector<bool>> r_nums;
+	std::vector<std::vector<bool>> c_nums;
+	std::vector<std::vector<bool>> s_nums;
 	uint board_size;
 
 	
@@ -19,4 +22,5 @@ public:
 	void open_from_file(std::string fname);
 
 	void print() const;
+	void derp() const;
 };
