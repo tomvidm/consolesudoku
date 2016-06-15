@@ -23,6 +23,7 @@ public:
 	Table cut(uint r0, uint c0, uint r1, uint c1);
 
 	void edit(uint r, uint v, T val);
+	void clear();
 	void init();
 	void setDim(uint r, uint c);
 };
@@ -31,6 +32,12 @@ template <typename T>
 Table<T>::Table()
 {
 	;
+}
+
+template <typename T>
+void Table<T>::clear()
+{
+	data.clear();
 }
 
 template <typename T>
