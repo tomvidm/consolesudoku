@@ -9,9 +9,9 @@ class Board
 {
 private:
 	Table<uint> board;
-	std::vector<std::vector<bool>> r_nums;
-	std::vector<std::vector<bool>> c_nums;
-	std::vector<std::vector<bool>> s_nums;
+	std::vector<std::vector<bool>> row_legalMoves;
+	std::vector<std::vector<bool>> col_legalMoves;
+	std::vector<std::vector<bool>> box_legalMoves;
 	uint board_size;
 
 public:

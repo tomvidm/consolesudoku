@@ -37,7 +37,6 @@ void Board::print() const
 	}
 }
 
-
 void Board::printLegal() const
 {
 	for (uint r = 0; r < board_size*board_size; r++)
@@ -77,7 +76,7 @@ void Board::derp() const
 	cout << "== Allowed in rows =============" << endl << endl;
 	cout << "          1 2 3 4 5 6 7 8 9" << endl << endl;
 	uint counter = 1;
-	for (auto i : r_nums)
+	for (auto i : row_legalMoves)
 	{
 		cout << "row " << counter << "     ";
 		counter++;
@@ -92,7 +91,7 @@ void Board::derp() const
 	cout << "== Allowed in columns ==========" << endl << endl;
 	cout << "         1 2 3 4 5 6 7 8 9" << endl << endl;
 	counter = 1;
-	for (auto i : c_nums)
+	for (auto i : col_legalMoves)
 	{
 		cout << "column " << counter << "  ";
 		counter++;
@@ -107,7 +106,7 @@ void Board::derp() const
 	cout << "== Allowed in boxes ============" << endl << endl;
 	cout << "          1 2 3 4 5 6 7 8 9" << endl << endl;
 	counter = 1;
-	for (auto i : s_nums)
+	for (auto i : box_legalMoves)
 	{
 		cout << "square " << counter << "  ";
 		counter++;
@@ -119,11 +118,6 @@ void Board::derp() const
 		cout << endl;
 	}
 }
-
-/*	open_from_file
-Read a sudoku board from a formatted .txt file. The loaded file should contain
-a single digit number on the first line, followed by N lines with N single digits each.
-*/
 
 void Board::open_from_file(std::string fname)
 {
@@ -171,7 +165,7 @@ uint Board::num_legal_moves(uint r, uint c) const
 	uint counter = 0;
 	for (uint i = 0; i < board_size*board_size; i++)
 	{
-		if (r_nums[r][i]  && c_nums[c][i] && s_nums[rc_to_box(r, c, board_size)][i])
+		if (row_legalMoves[r][i]  && col_legalMoves[c][i] && box_legalMoves[rc_to_box(r, c, board_size)][i])
 		{
 			counter++;
 		}
@@ -191,9 +185,9 @@ void Board::place(uint row, uint col, uint val)
 
 void Board::flip(uint row, uint col, uint val)
 {
-	r_nums[row][val - 1] = r_nums[row][val - 1] != 1;
-	c_nums[col][val - 1] = c_nums[col][val - 1] != 1;
-	s_nums[rc_to_box(row, col, board_size)][val - 1] = s_nums[rc_to_box(row, col, board_size)][val - 1] != 1;
+	row_legalMoves[row][val - 1] = row_legalMoves[row][val - 1] != 1;
+	col_legalMoves[col][val - 1] = col_legalMoves[col][val - 1] != 1;
+	box_legalMoves[rc_to_box(row, col, board_size)][val - 1] = box_legalMoves[rc_to_box(row, col, board_size)][val - 1] != 1;
 }
 
 Board::Board(uint n)
@@ -205,17 +199,17 @@ Board::Board(uint n)
 	for (uint r = 0; r < n*n; r++)
 	{
 		std::vector<bool> emptyBoolVector;
-		r_nums.push_back(emptyBoolVector);
-		c_nums.push_back(emptyBoolVector);
-		s_nums.push_back(emptyBoolVector);
+		row_legalMoves.push_back(emptyBoolVector);
+		col_legalMoves.push_back(emptyBoolVector);
+		box_legalMoves.push_back(emptyBoolVector);
 
 		for (uint c = 0; c < n*n; c++)
 		{
 			board.edit(r, c, 0);
 
-			r_nums[r].push_back(true);
-			c_nums[r].push_back(true);
-			s_nums[r].push_back(true);
+			row_legalMoves[r].push_back(true);
+			col_legalMoves[r].push_back(true);
+			box_legalMoves[r].push_back(true);
 		}
 	}
 }
