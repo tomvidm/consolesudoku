@@ -14,8 +14,6 @@ private:
 	std::vector<std::vector<bool>> s_nums;
 	uint board_size;
 
-	uint num_legal_moves(uint r, uint c) const;
-
 public:
 	Board(uint n);
 
@@ -24,7 +22,10 @@ public:
 	void flip(uint row, uint col, uint val);
 
 	void print() const;
+	void printLegal() const;
 	void derp() const;
+
+	uint num_legal_moves(uint r, uint c) const;
 };
 
 uint rc_to_box(uint r, uint c, uint n);

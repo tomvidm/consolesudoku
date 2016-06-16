@@ -37,6 +37,40 @@ void Board::print() const
 	}
 }
 
+
+void Board::printLegal() const
+{
+	for (uint r = 0; r < board_size*board_size; r++)
+	{
+		if (r % board_size == 0 && r > 0)
+		{
+			cout << "\t---------------------" << endl;
+		}
+
+		cout << r << "\t";
+
+		for (uint c = 0; c < board_size*board_size; c++)
+		{
+			if ((c == board_size || c == 2 * board_size))
+			{
+				cout << "| ";
+			}
+			if (board.get(r, c) != 0)
+			{
+				cout << ". ";
+				continue;
+			}
+			else
+			{
+				cout << num_legal_moves(r, c) << " ";
+			}
+
+		}
+
+		cout << endl;
+	}
+}
+
 void Board::derp() const
 {
 	cout << "================================" << endl;
@@ -137,7 +171,7 @@ uint Board::num_legal_moves(uint r, uint c) const
 	uint counter = 0;
 	for (uint i = 0; i < board_size*board_size; i++)
 	{
-		if (r_nums[r][i] || c_nums[c][i] || s_nums[rc_to_box(r, c, board_size)][i])
+		if (r_nums[r][i]  && c_nums[c][i] && s_nums[rc_to_box(r, c, board_size)][i])
 		{
 			counter++;
 		}
