@@ -132,6 +132,19 @@ void Board::open_from_file(std::string fname)
 	cout << "Could not open " << fname << endl << endl;
 }
 
+uint Board::num_legal_moves(uint r, uint c) const
+{
+	uint counter = 0;
+	for (uint i = 0; i < board_size*board_size; i++)
+	{
+		if (r_nums[r][i] || c_nums[c][i] || s_nums[rc_to_box(r, c, board_size)][i])
+		{
+			counter++;
+		}
+	}
+	return counter;
+}
+
 void Board::place(uint row, uint col, uint val)
 {
 	board.edit(row, col, val);

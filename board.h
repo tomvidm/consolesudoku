@@ -14,7 +14,7 @@ private:
 	std::vector<std::vector<bool>> s_nums;
 	uint board_size;
 
-	
+	uint num_legal_moves(uint r, uint c) const;
 
 public:
 	Board(uint n);
