@@ -17,17 +17,19 @@ void Board::print() const
 
 		for (uint c = 0; c < board_size*board_size; c++)
 		{
-			if ((c % board_size == 0 && c > 0))
+			if ((c == board_size || c == 2 * board_size))
 			{
 				cout << "| ";
-
 			}
-			else if (board.get(r, c) == 0)
+			if (board.get(r, c) == 0)
 			{
-				cout << "  ";
+				cout << ". ";
 				continue;
 			}
-			cout << board.get(r, c) << " ";
+			else
+			{
+				cout << board.get(r, c) << " ";
+			}
 			
 		}
 		
@@ -113,7 +115,12 @@ void Board::open_from_file(std::string fname)
 		{
 			for (uint i = 0; i < board_size*board_size; i++)
 			{
-				board.edit(counter, i, (uint)line[i] - 48);
+				uint new_val = (uint)line[i] - 48;
+				board.edit(counter, i, new_val);
+				if (new_val > 0)
+				{
+					flip(counter, i, new_val);
+				}
 			}
 			counter++;
 		}
@@ -123,6 +130,18 @@ void Board::open_from_file(std::string fname)
 		return;
 	}
 	cout << "Could not open " << fname << endl << endl;
+}
+
+void Board::place(uint row, uint col, uint val)
+{
+
+}
+
+void Board::flip(uint row, uint col, uint val)
+{
+	r_nums[row][val - 1] = r_nums[row][val - 1] != 1;
+	c_nums[col][val - 1] = c_nums[col][val - 1] != 1;
+	s_nums[rc_to_box(row, col, board_size)][val - 1] = s_nums[rc_to_box(row, col, board_size)][val - 1] != 1;
 }
 
 Board::Board(uint n)
@@ -147,4 +166,9 @@ Board::Board(uint n)
 			s_nums[r].push_back(true);
 		}
 	}
+}
+
+uint rc_to_box(uint r, uint c, uint n)
+{
+	return (((r) - (r) % n)) + ((c) - (c) % n) / n;
 }

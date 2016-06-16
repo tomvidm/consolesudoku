@@ -20,7 +20,11 @@ public:
 	Board(uint n);
 
 	void open_from_file(std::string fname);
+	void place(uint row, uint col, uint val);
+	void flip(uint row, uint col, uint val);
 
 	void print() const;
 	void derp() const;
 };
+
+uint rc_to_box(uint r, uint c, uint n);
