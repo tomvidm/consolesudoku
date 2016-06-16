@@ -134,7 +134,12 @@ void Board::open_from_file(std::string fname)
 
 void Board::place(uint row, uint col, uint val)
 {
+	board.edit(row, col, val);
 
+	if (val > 0)
+	{
+		flip(row, col, val);
+	}
 }
 
 void Board::flip(uint row, uint col, uint val)
