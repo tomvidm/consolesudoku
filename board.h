@@ -4,6 +4,7 @@
 #include <fstream>
 #include <utility>
 #include <algorithm>
+#include <list>
 
 #include "table.h"
 
@@ -14,6 +15,8 @@ struct Move
 	uint val;
 	uint old_val;
 };
+
+
 
 class Board
 {
@@ -40,6 +43,8 @@ public:
 	uint num_legal_moves(uint r, uint c) const;
 
 	void simpleSolve();
+
+	CandidateList listCandidates() const;
 };
 
 uint rc_to_box(uint r, uint c, uint n);

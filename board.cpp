@@ -203,13 +203,16 @@ void Board::place(uint row, uint col, uint val)
 {
 	if (num_legal_moves(row, col) > 0)
 	{
-		board.edit(row, col, val);
-
-		if (val > 0)
+		cout << "PLACING" << endl;
+		if (board.get(row, col) != 0)
 		{
-			flip(row, col, val);
+			flip(row, col, board.get(row, col));
 		}
-		else
+
+		board.edit(row, col, val);
+		flip(row, col, val);
+
+		if (val == 0)
 		{
 			empty_squares--;
 		}
@@ -228,7 +231,7 @@ Board::Board(uint n)
 {
 	board.setDim(n*n, n*n);
 	board.init();
-	empty_squares = board_size * board_size;
+	empty_squares = n * n * n * n;
 	for (uint r = 0; r < n*n; r++)
 	{
 		std::vector<bool> emptyBoolVector;
@@ -247,38 +250,9 @@ Board::Board(uint n)
 	}
 }
 
-void Board::simpleSolve()
+std::list<pair<uint, pair<uint, uint>>> Board::listCandidates() const
 {
-	cout << "Running function simpleSolve()" << endl;
-	cout << "Mapping candidate moves." << endl;
-	vector<pair<uint, pair<uint, uint>>> candidates;
 
-	for (uint r = 0; r < board_size*board_size; r++)
-	{
-		for (uint c = 0; c < board_size*board_size; c++)
-		{
-			if (board.get(r, c) == 0)
-			{
-				uint num_moves = num_legal_moves(r, c);
-				pair<uint, uint> coordinate = make_pair(r, c);
-				candidates.push_back(make_pair(num_moves, coordinate));
-			}
-		}
-	}
-	cout << "Finished mapping candidates. Sorting..." << endl;
-	sort(candidates.begin(), candidates.end());
-
-	uint r, c, s, counter = 0;
-	for (auto cand : candidates)
-	{
-		r = cand.second.first;
-		c = cand.second.second;
-		s = rc_to_box(r, c, board_size);
-		cout << "Candidate move " << counter << ": ";
-		cout << cand.first << " -- " << r << ", " << c << endl;
-
-		counter++;
-	}
 }
 
 uint rc_to_box(uint r, uint c, uint n)
