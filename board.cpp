@@ -175,11 +175,14 @@ uint Board::num_legal_moves(uint r, uint c) const
 
 void Board::place(uint row, uint col, uint val)
 {
-	board.edit(row, col, val);
-
-	if (val > 0)
+	if (num_legal_moves(row, col) > 0)
 	{
-		flip(row, col, val);
+		board.edit(row, col, val);
+
+		if (val > 0)
+		{
+			flip(row, col, val);
+		}
 	}
 }
 
