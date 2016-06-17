@@ -173,6 +173,7 @@ void Board::open_from_file(std::string fname)
 				if (new_val > 0)
 				{
 					flip(counter, i, new_val);
+					empty_squares--;
 				}
 			}
 			counter++;
@@ -208,6 +209,10 @@ void Board::place(uint row, uint col, uint val)
 		{
 			flip(row, col, val);
 		}
+		else
+		{
+			empty_squares--;
+		}
 	}
 }
 
@@ -223,7 +228,7 @@ Board::Board(uint n)
 {
 	board.setDim(n*n, n*n);
 	board.init();
-
+	empty_squares = board_size * board_size;
 	for (uint r = 0; r < n*n; r++)
 	{
 		std::vector<bool> emptyBoolVector;
