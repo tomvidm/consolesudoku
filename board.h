@@ -2,8 +2,18 @@
 
 #include <string>
 #include <fstream>
+#include <utility>
+#include <algorithm>
 
 #include "table.h"
+
+struct Move
+{
+	uint row;
+	uint col;
+	uint val;
+	uint old_val;
+};
 
 class Board
 {
@@ -25,8 +35,11 @@ public:
 	void print() const;
 	void printLegal() const;
 	void derp() const;
+	void derp(uint r, uint c) const;
 
 	uint num_legal_moves(uint r, uint c) const;
+
+	void simpleSolve();
 };
 
 uint rc_to_box(uint r, uint c, uint n);

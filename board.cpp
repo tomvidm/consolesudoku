@@ -119,6 +119,31 @@ void Board::derp() const
 	}
 }
 
+void Board::derp(uint r, uint c) const
+{
+	cout << "      1 2 3 4 5 6 7 8 9" << endl;
+	cout << "      | | | | | | | | |" << endl;
+	cout << "Row " << r << ": ";
+	uint s = rc_to_box(r, c, board_size);
+	for (uint i = 0; i < board_size*board_size; i++)
+	{
+		cout << (uint)row_legalMoves[r][i] << " ";
+	}
+	cout << endl;
+	cout << "Col " << c << ": ";
+	for (uint i = 0; i < board_size*board_size; i++)
+	{
+		cout << (uint)col_legalMoves[c][i] << " ";
+	}
+	cout << endl;
+	cout << "Box " << s << ": ";
+	for (uint i = 0; i < board_size*board_size; i++)
+	{
+		cout << (uint)box_legalMoves[s][i] << " ";
+	}
+	cout << endl << endl;
+}
+
 void Board::open_from_file(std::string fname)
 {
 	cout << "Loading board from file " << fname << endl;
@@ -217,7 +242,54 @@ Board::Board(uint n)
 	}
 }
 
+void Board::simpleSolve()
+{
+	cout << "Running function simpleSolve()" << endl;
+	cout << "Mapping candidate moves." << endl;
+	vector<pair<uint, pair<uint, uint>>> candidates;
+
+	for (uint r = 0; r < board_size*board_size; r++)
+	{
+		for (uint c = 0; c < board_size*board_size; c++)
+		{
+			if (board.get(r, c) == 0)
+			{
+				uint num_moves = num_legal_moves(r, c);
+				pair<uint, uint> coordinate = make_pair(r, c);
+				candidates.push_back(make_pair(num_moves, coordinate));
+			}
+		}
+	}
+	cout << "Finished mapping candidates. Sorting..." << endl;
+	sort(candidates.begin(), candidates.end());
+
+	uint r, c, s;
+	for (auto cand : candidates)
+	{
+		r = cand.second.first;
+		c = cand.second.second;
+		s = rc_to_box(r, c, board_size);
+		for (uint i = 0; i < board_size*board_size; i++)
+		{	
+			cout << i + 1 << " -> [" << r << ", " << c << "] in box " << s << "?";
+			if (row_legalMoves[r][i] && col_legalMoves[c][i] && box_legalMoves[s][i])
+			{
+				cout << " YES!" << endl;
+				derp(r, c);
+				cout << "num legal moves: " << num_legal_moves(r, c) << endl;
+				place(r, c, i + 1);
+				cand.first--;
+				break;
+			}
+			cout << " NO!" << endl;
+		}
+		print();
+		system("pause");
+	}
+}
+
 uint rc_to_box(uint r, uint c, uint n)
 {
 	return (((r) - (r) % n)) + ((c) - (c) % n) / n;
 }
+
