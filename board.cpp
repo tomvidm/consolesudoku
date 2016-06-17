@@ -250,9 +250,27 @@ Board::Board(uint n)
 	}
 }
 
-std::list<pair<uint, pair<uint, uint>>> Board::listCandidates() const
+void Board::simpleSolve()
 {
+	CandidateList candidates = listCandidates();
+}
 
+CandidateList Board::listCandidates() const
+{
+	std::list<pair<uint, pair<uint, uint>>> candidateList;
+	for (uint r = 0; r < board_size*board_size; r++)
+	{
+		for (uint c = 0; c < board_size*board_size; c++)
+		{
+			if (board.get(r, c) == 0)
+			{
+				uint n = num_legal_moves(r, c);
+				pair<uint, uint> coordinates = make_pair(r, c);
+				candidateList.push_back(make_pair(n, coordinates));
+			}
+		}
+	}
+	return candidateList;
 }
 
 uint rc_to_box(uint r, uint c, uint n)

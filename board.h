@@ -17,6 +17,7 @@ struct Move
 };
 
 
+typedef std::list<std::pair<uint, std::pair<uint, uint>>> CandidateList;
 
 class Board
 {
