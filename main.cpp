@@ -13,6 +13,5 @@ int main()
 	cout << endl;
 	gameboard.printLegal();
 	gameboard.simpleSolve();
-	gameboard.print();
 	return 0;
 }

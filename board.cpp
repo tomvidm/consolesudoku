@@ -263,28 +263,16 @@ void Board::simpleSolve()
 	cout << "Finished mapping candidates. Sorting..." << endl;
 	sort(candidates.begin(), candidates.end());
 
-	uint r, c, s;
+	uint r, c, s, counter = 0;
 	for (auto cand : candidates)
 	{
 		r = cand.second.first;
 		c = cand.second.second;
 		s = rc_to_box(r, c, board_size);
-		for (uint i = 0; i < board_size*board_size; i++)
-		{	
-			cout << i + 1 << " -> [" << r << ", " << c << "] in box " << s << "?";
-			if (row_legalMoves[r][i] && col_legalMoves[c][i] && box_legalMoves[s][i])
-			{
-				cout << " YES!" << endl;
-				derp(r, c);
-				cout << "num legal moves: " << num_legal_moves(r, c) << endl;
-				place(r, c, i + 1);
-				cand.first--;
-				break;
-			}
-			cout << " NO!" << endl;
-		}
-		print();
-		system("pause");
+		cout << "Candidate move " << counter << ": ";
+		cout << cand.first << " -- " << r << ", " << c << endl;
+
+		counter++;
 	}
 }
 
