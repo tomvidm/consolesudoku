@@ -26,6 +26,7 @@ private:
 	std::vector<std::vector<bool>> row_legalMoves;
 	std::vector<std::vector<bool>> col_legalMoves;
 	std::vector<std::vector<bool>> box_legalMoves;
+
 	uint empty_squares;
 	uint board_size;
 

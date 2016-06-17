@@ -10,8 +10,8 @@ int main()
 
 	gameboard.open_from_file("test.txt");
 	gameboard.print();
-	cout << endl;
-	gameboard.printLegal();
+	cout << endl << endl;
 	gameboard.simpleSolve();
+	gameboard.print();
 	return 0;
 }

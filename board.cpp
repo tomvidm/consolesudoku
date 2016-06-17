@@ -203,7 +203,6 @@ void Board::place(uint row, uint col, uint val)
 {
 	if (num_legal_moves(row, col) > 0)
 	{
-		cout << "PLACING" << endl;
 		if (board.get(row, col) != 0)
 		{
 			flip(row, col, board.get(row, col));
@@ -258,6 +257,10 @@ void Board::simpleSolve()
 	{
 		for (auto cand : candidates)
 		{
+			if (cand.first > 1)
+			{
+				continue;
+			}
 			uint r = cand.second.first;
 			uint c = cand.second.second;
 			uint s = rc_to_box(r, c, board_size);
@@ -271,16 +274,13 @@ void Board::simpleSolve()
 			}
 		}
 		candidates = listCandidates();
-
-		print();
-		system("pause");
 	}
-
 }
 
 CandidateList Board::listCandidates() const
 {
 	std::list<pair<uint, pair<uint, uint>>> candidateList;
+
 	for (uint r = 0; r < board_size*board_size; r++)
 	{
 		for (uint c = 0; c < board_size*board_size; c++)
