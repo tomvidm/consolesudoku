@@ -253,6 +253,29 @@ Board::Board(uint n)
 void Board::simpleSolve()
 {
 	CandidateList candidates = listCandidates();
+
+	while (candidates.size() > 0)
+	{
+		for (auto cand : candidates)
+		{
+			uint r = cand.second.first;
+			uint c = cand.second.second;
+			uint s = rc_to_box(r, c, board_size);
+
+			for (uint i = 0; i < board_size*board_size; i++)
+			{
+				if (row_legalMoves[r][i] && col_legalMoves[c][i] && box_legalMoves[s][i])
+				{
+					place(r, c, i + 1);
+				}
+			}
+		}
+		candidates = listCandidates();
+
+		print();
+		system("pause");
+	}
+
 }
 
 CandidateList Board::listCandidates() const
@@ -270,6 +293,7 @@ CandidateList Board::listCandidates() const
 			}
 		}
 	}
+	candidateList.sort();
 	return candidateList;
 }
 
