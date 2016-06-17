@@ -43,8 +43,9 @@ public:
 	void derp(uint r, uint c) const;
 
 	uint num_legal_moves(uint r, uint c) const;
+	bool isSolved() const;
 
-	void simpleSolve();
+	void naiveSolveStep();
 
 	CandidateList listCandidates() const;
 };

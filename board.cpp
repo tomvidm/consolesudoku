@@ -249,11 +249,21 @@ Board::Board(uint n)
 	}
 }
 
-void Board::simpleSolve()
+bool Board::isSolved() const
+{
+	if (empty_squares == 0)
+	{
+		return true;
+	}
+	cout << "Is not solved yet. Empty squares = " << empty_squares << endl;
+	return false;
+}
+
+void Board::naiveSolveStep()
 {
 	CandidateList candidates = listCandidates();
 
-	while (candidates.size() > 0)
+	if (candidates.size() > 0)
 	{
 		for (auto cand : candidates)
 		{
@@ -275,12 +285,17 @@ void Board::simpleSolve()
 		}
 		candidates = listCandidates();
 	}
+	else
+	{
+		cout << "Simple solve cannot solve. More than one possible moves in every square." << endl;
+		return;
+	}
 }
 
 CandidateList Board::listCandidates() const
 {
 	std::list<pair<uint, pair<uint, uint>>> candidateList;
-
+	
 	for (uint r = 0; r < board_size*board_size; r++)
 	{
 		for (uint c = 0; c < board_size*board_size; c++)

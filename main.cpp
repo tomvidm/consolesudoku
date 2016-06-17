@@ -10,8 +10,13 @@ int main()
 
 	gameboard.open_from_file("test.txt");
 	gameboard.print();
-	cout << endl << endl;
-	gameboard.simpleSolve();
-	gameboard.print();
+	while (!gameboard.isSolved())
+	{
+		cout << endl << endl;
+		gameboard.naiveSolveStep();
+		gameboard.print();
+		system("pause");
+	}
+	
 	return 0;
 }
